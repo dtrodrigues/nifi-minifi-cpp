@@ -105,7 +105,7 @@ matrix:
         - package='libpcap'; [[ $(brew ls --versions ${package}) ]] && { brew outdated ${package} || brew upgrade ${package}; } || brew install ${package}
         - package='xz'; [[ $(brew ls --versions ${package}) ]] && { brew outdated ${package} || brew upgrade ${package}; } || brew install ${package}
     - os: osx
-      osx_image: xcode9.1
+      osx_image: xcode10
       env:
         - CMAKE_BUILD_OPTIONS="${CMAKE_BUILD_OPTIONS} -DENABLE_LUA_SCRIPTING=1"
       # https://docs.travis-ci.com/user/osx-ci-environment/#Homebrew
