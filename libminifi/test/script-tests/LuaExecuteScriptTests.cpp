@@ -119,7 +119,7 @@ TEST_CASE("Lua: Test Read File", "[executescriptLuaRead]") { // NOLINT
   plan->setProperty(getFile, processors::GetFile::Directory.getName(), getFileDir);
 
   char putFileDirFmt[] = "/tmp/ft.XXXXXX";
-  char *putFileDir = testController.createTempDirectory(putFileDirFmt);
+  auto putFileDir = testController.createTempDirectory(putFileDirFmt);
   plan->setProperty(putFile, processors::PutFile::Directory.getName(), putFileDir);
 
   testController.runSession(plan, false);
@@ -209,7 +209,7 @@ TEST_CASE("Lua: Test Write File", "[executescriptLuaWrite]") { // NOLINT
   plan->setProperty(getFile, processors::GetFile::Directory.getName(), getFileDir);
 
   char putFileDirFmt[] = "/tmp/ft.XXXXXX";
-  char *putFileDir = testController.createTempDirectory(putFileDirFmt);
+  auto putFileDir = testController.createTempDirectory(putFileDirFmt);
   plan->setProperty(putFile, processors::PutFile::Directory.getName(), putFileDir);
 
   testController.runSession(plan, false);

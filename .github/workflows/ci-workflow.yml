@@ -1,0 +1,69 @@
+name: ci-workflow
+
+on: [push]
+
+jobs:
+  windows-build:
+
+    runs-on: windows-2016
+
+    steps:
+      - name: Setup Git
+        run:  |
+          git config --global core.autocrlf false
+          git config --global core.longpaths true
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        #      - name: Setup VSWhere.exe
+        #        uses: warrenbuckley/Setup-VSWhere@v1
+      - name: Add msbuild to PATH
+        uses: heaths/setup-msbuild@issue10
+      - name: Build
+        run: ./win_build_vs.bat build
+
+  #    xenial:
+  #        runs-on: ubuntu-18.04
+  #        steps:
+  #          - name: Checkout Code
+  #            uses: actions/checkout@v2
+  #          - name: Install Dependencies
+  #            run: |
+  #                sudo apt-get update && sudo apt-get install -y gcc-4.8 g++-4.8 bison flex libboost-all-dev uuid-dev doxygen openssl libcurl4-openssl-dev ccache libpython3-dev liblua5.1-0-dev libusb-1.0-0-dev libpng12-dev libpcap-dev libssh2-1-dev
+  #                sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-4.8 /usr/bin/gcc
+  #                sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-4.8 /usr/bin/g++
+  #          - name: Build
+  #            run: |
+  #                ./bootstrap.sh -e -t && cd build  && cmake -DENABLE_PCAP=TRUE -DUSE_SHARED_LIBS= -DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_RULE_MESSAGES=OFF .. && cmake --build . --parallel 4 && sudo make test ARGS="-j2 --output-on-failure"
+  #    trusty:
+  #        runs-on: ubuntu-16.04
+  #        steps:
+  #          - name: Checkout Code
+  #            uses: actions/checkout@v2
+  #          - name: Install Dependencies
+  #            run: |
+  #                sudo apt-get update && sudo apt-get install -y gcc-4.8 g++-4.8 bison flex libboost-dev uuid-dev doxygen openssl libcurl4-openssl-dev ccache libpython3-dev liblua5.1-0-dev libusb-1.0-0-dev libpng12-dev libpcap0.8-dev libssh-dev
+  #                sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-4.8 /usr/bin/gcc
+  #                sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-4.8 /usr/bin/g++
+  #          - name: Build
+  #            run: |
+  #                ./bootstrap.sh -e -t && cd build  && cmake -DENABLE_PCAP=TRUE -DUSE_SHARED_LIBS= .. && make -j4 VERBOSE=1  && sudo make test ARGS="-j2 --output-on-failure"
+  #    osx-build:
+  #      runs-on: macos-latest
+  #      steps:
+  #        - name: Checkout Code
+  #          uses: actions/checkout@v2
+  #        - name: Build
+  #          run: |
+  #              ./bootstrap.sh -e -t && cd build  && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_RULE_MESSAGES=OFF -DENABLE_PCAP=TRUE -DENABLE_LUA_SCRIPTING=1 .. && cmake --build . --parallel 4 && sudo make test ARGS="-j4 --output-on-failure" && make linter
+  #  #          #export CMAKE_BUILD_OPTIONS="${CMAKE_BUILD_OPTIONS} -DENABLE_LUA_SCRIPTING=1" && ./bootstrap.sh -e -t && cd build  && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_RULE_MESSAGES=OFF .. && cmake --build . --parallel 4 && sudo make test ARGS="-j4 --output-on-failure" && make linter
+  #    ubuntu-1604:
+  #      runs-on: ubuntu-16.04
+  #      steps:
+  #        - name: gcc test
+  #          run: |
+  #            g++ --version
+  #            sudo apt-get install gcc-4.8 g++-4.8
+  #            sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-4.8 /usr/bin/gcc
+  #            sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-4.8 /usr/bin/g++
+  #            g++ --version
+

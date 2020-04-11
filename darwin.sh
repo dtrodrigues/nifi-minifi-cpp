@@ -121,5 +121,5 @@ build_deps(){
     done
 
     echo "Ensuring you have all dependencies installed..."
-    ${COMMAND} > /dev/null 2>&1
+    ${COMMAND}
 }
